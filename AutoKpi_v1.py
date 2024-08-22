@@ -268,43 +268,7 @@ with open(path3, mode='w', newline='') as file:
 
 print("CSV files created successfully.")
 
-
-
-import csv
-
-# Paths to read the CSV files
-path1 = "C:/content/KPI_FOLDER/workstations.csv"
-path2 = "C:/content/KPI_FOLDER/agents1.csv"
-
-# Reading workstations.csv
-with open(path1, mode='r') as file:
-    reader = csv.reader(file)
-    data1 = list(reader)
-
-# Reading agents1.csv
-with open(path2, mode='r') as file:
-    reader = csv.reader(file)
-    data2 = list(reader)
-
-# Get the number of rows (similar to max_row in XLSX)
-row_count1 = len(data1)
-row_count2 = len(data2)
-
-print("Total Rows from workstations.csv:", row_count1)
-print("Total Rows from agents1.csv:", row_count2)
-
-# Print the values from the first column
-print("\nValues from the first column in workstations.csv:")
-for row in data1:
-    print(row[0])
-
-print("\nValues from the first column in agents1.csv:")
-for row in data2:
-    print(row[0])
-#======================================================================================================
-##=====================================================================================================
-
-import csv
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def read_files(all_computers_file, antivirus_file):
     # Reading the CSV files
@@ -319,12 +283,12 @@ def read_files(all_computers_file, antivirus_file):
     # Print the first column of all_computers.csv
     print("First column of all_computers.csv:")
     for row in all_computers_data:
-        print(row[0])
+        print(row[0].strip())  # Trim spaces
 
     # Print the first column of antivirus.csv
     print("\nFirst column of antivirus.csv:")
     for row in antivirus_data:
-        print(row[0])
+        print(row[0].strip())  # Trim spaces
 
 ####--------------------------------------------------------------------------------
 
@@ -332,11 +296,11 @@ def compare_computers(all_computers_file, antivirus_file):
     # Reading the CSV files
     with open(all_computers_file, mode='r') as file:
         reader = csv.reader(file)
-        all_computers_data = [row[0] for row in list(reader)]
+        all_computers_data = [row[0].strip() for row in list(reader)]  # Trim spaces
 
     with open(antivirus_file, mode='r') as file:
         reader = csv.reader(file)
-        antivirus_data = [row[0] for row in list(reader)]
+        antivirus_data = [row[0].strip() for row in list(reader)]  # Trim spaces
 
     # Use set operations to find unique values in the first file not present in the second
     unique_computers = set(all_computers_data) - set(antivirus_data)
@@ -349,11 +313,11 @@ def cleanup(all_computers_file, antivirus_file):
     # Reading the CSV files
     with open(all_computers_file, mode='r') as file:
         reader = csv.reader(file)
-        all_computers_data = [row[0] for row in list(reader)]
+        all_computers_data = [row[0].strip() for row in list(reader)]  # Trim spaces
 
     with open(antivirus_file, mode='r') as file:
         reader = csv.reader(file)
-        antivirus_data = [row[0] for row in list(reader)]
+        antivirus_data = [row[0].strip() for row in list(reader)]  # Trim spaces
 
     # Use set operations to find unique values in the second file not present in the first
     cleanup_comp = set(antivirus_data) - set(all_computers_data)
@@ -402,4 +366,3 @@ for computer in computers_without_av:
 print("List of computers that need to cleanup:")
 for computer in computers_needtocleanup:
     print(computer)
-
