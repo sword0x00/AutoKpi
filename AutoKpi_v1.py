@@ -301,5 +301,105 @@ for row in data1:
 print("\nValues from the first column in agents1.csv:")
 for row in data2:
     print(row[0])
+#======================================================================================================
+##=====================================================================================================
 
+import csv
+
+def read_files(all_computers_file, antivirus_file):
+    # Reading the CSV files
+    with open(all_computers_file, mode='r') as file:
+        reader = csv.reader(file)
+        all_computers_data = list(reader)
+
+    with open(antivirus_file, mode='r') as file:
+        reader = csv.reader(file)
+        antivirus_data = list(reader)
+
+    # Print the first column of all_computers.csv
+    print("First column of all_computers.csv:")
+    for row in all_computers_data:
+        print(row[0])
+
+    # Print the first column of antivirus.csv
+    print("\nFirst column of antivirus.csv:")
+    for row in antivirus_data:
+        print(row[0])
+
+####--------------------------------------------------------------------------------
+
+def compare_computers(all_computers_file, antivirus_file):
+    # Reading the CSV files
+    with open(all_computers_file, mode='r') as file:
+        reader = csv.reader(file)
+        all_computers_data = [row[0] for row in list(reader)]
+
+    with open(antivirus_file, mode='r') as file:
+        reader = csv.reader(file)
+        antivirus_data = [row[0] for row in list(reader)]
+
+    # Use set operations to find unique values in the first file not present in the second
+    unique_computers = set(all_computers_data) - set(antivirus_data)
+
+    return list(unique_computers)
+
+####--------------------------------------------------------------------------------
+
+def cleanup(all_computers_file, antivirus_file):
+    # Reading the CSV files
+    with open(all_computers_file, mode='r') as file:
+        reader = csv.reader(file)
+        all_computers_data = [row[0] for row in list(reader)]
+
+    with open(antivirus_file, mode='r') as file:
+        reader = csv.reader(file)
+        antivirus_data = [row[0] for row in list(reader)]
+
+    # Use set operations to find unique values in the second file not present in the first
+    cleanup_comp = set(antivirus_data) - set(all_computers_data)
+
+    return list(cleanup_comp)
+
+#-----------------------------------------------------------------------------
+
+
+def write_files(list_without_agent, list_tocleanup):
+    # Paths to save the CSV files
+    path_without_agent = "C:/content/KPI_FOLDER/withoutagents.csv"
+    path_cleanup = "C:/content/KPI_FOLDER/cleanup.csv"
+
+    # Writing list_without_agent to withoutagents.csv
+    with open(path_without_agent, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        for computer in list_without_agent:
+            writer.writerow([computer])
+
+    # Writing list_tocleanup to cleanup.csv
+    with open(path_cleanup, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        for computer in list_tocleanup:
+            writer.writerow([computer])
+
+    print("CSV files created successfully.")
+
+#-----------------------------------------------------------------------
+
+# Example usage
+all_computers_file = "C:/content/KPI_FOLDER/workstations.csv"
+antivirus_file = "C:/content/KPI_FOLDER/agents1.csv"
+
+read_files(all_computers_file, antivirus_file)
+computers_without_av = compare_computers(all_computers_file, antivirus_file)
+computers_needtocleanup = cleanup(all_computers_file, antivirus_file)
+write_files(computers_without_av, computers_needtocleanup)
+
+# Print the list of computers without AV
+print("Computers without agents:")
+for computer in computers_without_av:
+    print(computer)
+
+# Print the list of computers that need cleanup
+print("List of computers that need to cleanup:")
+for computer in computers_needtocleanup:
+    print(computer)
 
