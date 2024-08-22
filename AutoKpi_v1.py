@@ -227,29 +227,79 @@ for computer in computers_needtocleanup:
   print(computer)
 #================================================================
 import csv
-import os
+
+# Paths to save the CSV files
+path1 = "C:/content/KPI_FOLDER/workstations.csv"
+path2 = "C:/content/KPI_FOLDER/agents1.csv"
+path3 = "C:/content/KPI_FOLDER/agents1_offline.csv"
 
 # Data to write into CSV
-data = [
+data1 = [
     ["computer1"],
     ["computer2"],
     ["World111"]
 ]
 
-# Path to save the CSV file
-csv_file_path = "C:/path/to/your/folder/workstations.csv"
+data2 = [
+    ["computer1"],
+    ["computer2"],
+    ["computer23"]
+]
 
-# Check if directory exists
-if not os.path.exists(os.path.dirname(csv_file_path)):
-    os.makedirs(os.path.dirname(csv_file_path))
+data3 = [
+    ["computer1 of line"],
+    ["computer2"]
+]
 
-try:
-    # Writing to CSV
-    with open(csv_file_path, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(data)
+# Writing data1 to workstations.csv
+with open(path1, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data1)
 
-    print(f"CSV file created at {csv_file_path}")
-except Exception as e:
-    print(f"An error occurred: {e}")
+# Writing data2 to agents1.csv
+with open(path2, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data2)
+
+# Writing data3 to agents1_offline.csv
+with open(path3, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data3)
+
+print("CSV files created successfully.")
+
+
+
+import csv
+
+# Paths to read the CSV files
+path1 = "C:/content/KPI_FOLDER/workstations.csv"
+path2 = "C:/content/KPI_FOLDER/agents1.csv"
+
+# Reading workstations.csv
+with open(path1, mode='r') as file:
+    reader = csv.reader(file)
+    data1 = list(reader)
+
+# Reading agents1.csv
+with open(path2, mode='r') as file:
+    reader = csv.reader(file)
+    data2 = list(reader)
+
+# Get the number of rows (similar to max_row in XLSX)
+row_count1 = len(data1)
+row_count2 = len(data2)
+
+print("Total Rows from workstations.csv:", row_count1)
+print("Total Rows from agents1.csv:", row_count2)
+
+# Print the values from the first column
+print("\nValues from the first column in workstations.csv:")
+for row in data1:
+    print(row[0])
+
+print("\nValues from the first column in agents1.csv:")
+for row in data2:
+    print(row[0])
+
 
