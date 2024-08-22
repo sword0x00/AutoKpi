@@ -366,3 +366,27 @@ for computer in computers_without_av:
 print("List of computers that need to cleanup:")
 for computer in computers_needtocleanup:
     print(computer)
+#--------------------------------------
+import csv
+
+# Input and output file paths
+input_file = 'computers.csv'
+output_file = 'computers_v1.csv'
+
+# The OS to filter by
+filter_os = 'kali'  # Adjust this to the desired OS
+
+# Open the input file in read mode and output file in write mode
+with open(input_file, mode='r', newline='') as infile, open(output_file, mode='w', newline='') as outfile:
+    reader = csv.DictReader(infile)
+    writer = csv.DictWriter(outfile, fieldnames=reader.fieldnames)
+    
+    # Write the header to the output file
+    writer.writeheader()
+
+    # Iterate through the rows and write only those that match the filter
+    for row in reader:
+        if filter_os.lower() in row['operatingsystem'].lower():  # Case-insensitive match
+            writer.writerow(row)
+
+print(f"Filtered data saved to {output_file}")
