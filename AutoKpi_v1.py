@@ -226,7 +226,30 @@ print("list oF computers need to cleanup:")
 for computer in computers_needtocleanup:
   print(computer)
 #================================================================
-#test
-# test1="/content/KPI_FOLDER/withoutagents.xlsx"
-# test2="/content/KPI_FOLDER/cleanup.xlsx"
-# read_files(test1,test2)
+import csv
+import os
+
+# Data to write into CSV
+data = [
+    ["computer1"],
+    ["computer2"],
+    ["World111"]
+]
+
+# Path to save the CSV file
+csv_file_path = "C:/path/to/your/folder/workstations.csv"
+
+# Check if directory exists
+if not os.path.exists(os.path.dirname(csv_file_path)):
+    os.makedirs(os.path.dirname(csv_file_path))
+
+try:
+    # Writing to CSV
+    with open(csv_file_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+
+    print(f"CSV file created at {csv_file_path}")
+except Exception as e:
+    print(f"An error occurred: {e}")
+
