@@ -394,27 +394,29 @@ print(f"Filtered data saved to {output_file}")
 ####-----------asdfasdfasdfasdf------------------------------
 #
 #
-#5
+#6
 import csv
 
-input_file = 'input.csv'   # Replace with your actual input file name
-output_file = 'filtered_output.csv'  # Output file name
+def filter_and_extract(input_file, output_file):
+    """Filters a CSV file based on OS and extracts the 'name' column.
 
-# Define the OS values to filter by
-os_filter = ['kali', 'windows']
+    Args:
+        input_file: The path to the input CSV file.
+        output_file: The path to the output CSV file.
+    """
 
-with open(input_file, mode='r') as infile, open(output_file, mode='w', newline='') as outfile:
-    reader = csv.DictReader(infile)
-    writer = csv.writer(outfile)
-    
-    # Write header for the output file
-    writer.writerow(['name'])
-    
-    for row in reader:
-        if row['operatingsystem'].lower() in os_filter:
-            writer.writerow([row['name']])
+    with open(input_file, 'r', newline='') as infile, open(output_file, 'w', newline='') as outfile:
+        reader = csv.DictReader(infile)
+        writer = csv.writer(outfile)
+        writer.writerow(['name'])  # Write the header
 
-print(f"Filtered output written to {output_file}")
+        for row in reader:
+            if row['operatingsystem'] in ['kali', 'windows']:
+                writer.writerow([row['name']])
 
+# Example usage:
+input_file = 'input.csv'
+output_file = 'output.csv'
+filter_and_extract(input_file, output_file)
 
 
