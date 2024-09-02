@@ -398,25 +398,24 @@ import csv
 
 # Input and output file paths
 input_file = 'input.csv'
-output_file = 'output.csv'
+output_file = 'filtered_names.csv'
 
-# List of OS to filter by
-os_filter = ['kali', 'windows']
+# Define the OS types you want to filter by
+os_types = ['kali', 'windows']
 
-# Open the input CSV file for reading
+# Open the input CSV file
 with open(input_file, mode='r', newline='') as infile:
     reader = csv.DictReader(infile)
-    
-    # Open the output CSV file for writing
-    with open(output_file, mode='w', newline='') as outfile:
-        writer = csv.writer(outfile)
-        writer.writerow(['name'])  # Write the header for the output file
-        
-        # Iterate through the rows in the input file
-        for row in reader:
-            # Check if the OS in the current row is in the list of OS to filter by
-            if row['os'].lower() in os_filter:
-                writer.writerow([row['name']])  # Write the filtered name to the output file
+
+    # Filter rows and collect names based on OS type
+    filtered_names = [row['name'] for row in reader if row['operatingsystem'].lower() in os_types]
+
+# Write the filtered names to the output CSV file
+with open(output_file, mode='w', newline='') as outfile:
+    writer = csv.writer(outfile)
+    writer.writerow(['name'])  # Write the header
+    for name in filtered_names:
+        writer.writerow([name])  # Write each filtered name
 
 
 
