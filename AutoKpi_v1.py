@@ -390,3 +390,26 @@ with open(input_file, mode='r', newline='') as infile, open(output_file, mode='w
             writer.writerow(row)
 
 print(f"Filtered data saved to {output_file}")
+
+####-----------asdfasdfasdfasdf------------------------------
+import csv
+
+# Input and output file paths
+input_file = 'computers.csv'
+output_file = 'filtered_computers.txt'
+
+# The OS to filter by
+filter_os_list = ['kali', 'windows']  # Add all the OS names you want to filter by
+
+# Open the input file in read mode and output file in write mode
+with open(input_file, mode='r', newline='') as infile, open(output_file, mode='w', newline='') as outfile:
+    reader = csv.reader(infile, delimiter=' ')  # Assuming space-separated columns
+
+    # Iterate through the rows and write the hostname if the OS matches any in the filter list
+    for row in reader:
+        hostname, os = row[0], row[1]
+        if any(filter_os.lower() in os.lower() for filter_os in filter_os_list):  # Case-insensitive match
+            outfile.write(f"{hostname}\n")
+
+print(f"Filtered hostnames saved to {output_file}")
+
